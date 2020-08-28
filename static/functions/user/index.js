@@ -2,7 +2,7 @@
 const cloud = require('wx-server-sdk')
 
 cloud.init({
-  env: 'wedding'
+  env: 'ping-u4lkw'
 })
 
 // 云函数入口函数

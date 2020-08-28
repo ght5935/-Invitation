@@ -1,6 +1,6 @@
 const cloud = require('wx-server-sdk')
 cloud.init({
-  env: 'wedding'
+  env: 'ping-u4lkw'
 })
 const db = cloud.database()
 const MAX_LIMIT = 100

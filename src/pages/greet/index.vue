@@ -1,22 +1,19 @@
 <template>
-    <div class="greet">
-        <Himg></Himg>
-        <image class="head" src="../../static/images/heart-animation.gif"/>
-        <scroll-view
-            scroll-y
-            class="box"
-        >
-            <div class="item" v-for="(item, index) in userList" :key="index">
-                <image :src="item.user.avatarUrl"/>
-                <p>{{item.user.nickName}}</p>
-            </div>
-        </scroll-view>
-        <p class="count">已收到{{userList.length}}位好友送来的祝福</p>
-        <div class="bottom">
-            <button class="left" lang="zh_CN" open-type="getUserInfo" @getuserinfo="sendGreet">送上祝福</button>
-            <button class="right" open-type="share">分享喜悦</button> 
-        </div>
+  <div class="greet">
+    <Himg></Himg>
+    <image class="head" src="../../static/images/heart-animation.gif" />
+    <scroll-view scroll-y class="box">
+      <div class="item" v-for="(item, index) in userList" :key="index">
+        <image :src="item.user.avatarUrl" />
+        <p>{{item.user.nickName}}</p>
+      </div>
+    </scroll-view>
+    <p class="count">已收到{{userList.length}}位好友送来的祝福</p>
+    <div class="bottom">
+      <button class="left" lang="zh_CN" open-type="getUserInfo" @getuserinfo="sendGreet">送上祝福</button>
+      <button class="right" open-type="share">分享喜悦</button>
     </div>
+  </div>
 </template>
 
 <script>
@@ -55,20 +52,24 @@ export default {
       const that = this;
       const db = wx.cloud.database();
       const user = db.collection("user");
-      user.add({
+      user
+        .add({
           data: {
             user: that.userInfo
           }
-        }).then(res => {
+        })
+        .then(res => {
           that.getUserList();
         });
     },
     getOpenId() {
       const that = this;
-      wx.cloud.callFunction({
+      wx.cloud
+        .callFunction({
           name: "user",
           data: {}
-        }).then(res => {
+        })
+        .then(res => {
           that.openId = res.result.openid;
           that.getIsExist();
         });
@@ -78,9 +79,12 @@ export default {
       const that = this;
       const db = wx.cloud.database();
       const user = db.collection("user");
-      user.where({
+      user
+        .where({
           _openid: that.openId
-        }).get().then(res => {
+        })
+        .get()
+        .then(res => {
           if (res.data.length === 0) {
             that.addUser();
           } else {
@@ -91,13 +95,19 @@ export default {
 
     getUserList() {
       const that = this;
-      wx.cloud.callFunction({
+      wx.cloud
+        .callFunction({
           name: "userList",
           data: {}
-        }).then(res => {
-          that.userList = res.result.data.reverse();
-        }).catch(e => {
-          console.log(e, "错误")
+        })
+        .then(res => {
+          that.userList =
+            res.result && res.result.data && res.result.data
+              ? res.result.data.reverse()
+              : [];
+        })
+        .catch(e => {
+          console.log(e, "错误");
         });
     }
   }
@@ -108,11 +118,13 @@ export default {
 .greet {
   width: 100%;
   height: 100%;
+
   .head {
     height: 150rpx;
     width: 200rpx;
     margin: 0 auto;
   }
+
   .box {
     height: 700rpx;
     width: 690rpx;
