@@ -35,7 +35,9 @@
       </div>
     </div>
     <div class="video-dialog" @tap="toVideo">
-      <image src="/static/images/video1.png" />
+      <image src="/static/images/4-2.png" />
+
+      <!-- <image src="/static/images/video1.png" /> -->
     </div>
     <div class="form-dialog" @tap="lookList">
       <image src="/static/images/form.png" />
@@ -234,8 +236,9 @@ export default {
     },
 
     toVideo() {
-      const that = this;
-      that.isVideo = true;
+      // const that = this;
+      // that.isVideo = true;
+      tools.showToast("暂未开放~");
     },
 
     closeVideo() {
